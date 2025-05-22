@@ -1,21 +1,15 @@
 import Foundation
 import Combine
 import FirebaseCore
-import FirebaseVertexAI // Updated import
+import FirebaseVertexAI
 import SwiftUI // For NSImage manipulation, though ideally keep UI types out of service
-
-// TODO: Replace with your actual API Key
-private let GEMINI_API_KEY = "YOUR_API_KEY"
 
 class AnalysisService {
     private var cancellables = Set<AnyCancellable>()
 
     // Initialize the Vertex AI generative model.
-    // Using "gemini-pro-vision" as a widely available model for multimodal tasks.
-    // Ensure your Firebase project is configured for Vertex AI and the necessary APIs are enabled.
     private lazy var generativeModel = VertexAI.vertexAI().generativeModel(modelName: "gemini-2.0-flash-001")
 
-    // Placeholder for your actual parsing function - YOU NEED TO IMPLEMENT THIS
     private func parseIndividualAnalyses(from responseText: String, imageCount: Int) -> [String] {
         print("Attempting to parse: \"\(responseText)\" for \(imageCount) images.")
         var results = [String](repeating: "Analysis not available or parsing failed.", count: imageCount)
@@ -158,7 +152,6 @@ class AnalysisService {
                          specificMessage = firebaseErrorMessage
                     }
                     // Add the specific error message you saw in the logs, if it's consistently available under a specific key
-                    // For instance, if the server message was always in error.userInfo[" ನಮ್ಮServerMessageKey"] (replace with actual key if found)
 
                     let messageForUI = "API Error: \(specificMessage)"
                     print("Firebase AI Error Details: code=\(error.code), domain=\(error.domain), userInfo=\(error.userInfo)")
